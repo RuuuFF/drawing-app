@@ -78,8 +78,3 @@ decreaseBtn.addEventListener('click', () => {
 colorEl.addEventListener('change', (e) => color = e.target.value)
 
 clearEl.addEventListener('click', () => ctx.clearRect(0, 0, canvas.width, canvas.height))
-
-if (canvas.offsetWidth < 800) {
-  canvas.width = canvas.offsetWidth
-  canvas.height = canvas.offsetWidth
-}
