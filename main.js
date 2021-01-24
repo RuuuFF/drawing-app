@@ -78,3 +78,42 @@ decreaseBtn.addEventListener('click', () => {
 colorEl.addEventListener('change', (e) => color = e.target.value)
 
 clearEl.addEventListener('click', () => ctx.clearRect(0, 0, canvas.width, canvas.height))
+
+// ===== MOBILE =====
+canvas.addEventListener('touchstart', (event) => {
+  event.preventDefault()
+  x = Math.ceil(event.touches[0].pageX) - event.target.offsetLeft
+  y = Math.ceil(event.touches[0].pageY) - event.target.offsetTop
+})
+
+canvas.addEventListener('touchmove', (event) => {
+  event.preventDefault()
+  x2 = Math.ceil(event.touches[0].pageX) - event.target.offsetLeft
+  y2 = Math.ceil(event.touches[0].pageY) - event.target.offsetTop
+  
+  drawCircle(x2, y2)
+  drawLine(x, y, x2, y2)
+  
+  x = x2
+  y = y2
+})
+
+function setCanvasWidth() {
+  const screenWidth = document.body.clientWidth
+  let canvasWidth = 90 * screenWidth / 100
+  
+  if (canvasWidth > 800) {
+    canvasWidth = 800
+  }
+  
+  if (screenWidth < 580) {
+    size = 5
+    updateSizeOnScreen()
+  }
+  
+  canvas.width = canvasWidth
+  canvas.height = canvasWidth
+}
+
+window.addEventListener('load', setCanvasWidth)
+window.addEventListener('resize', setCanvasWidth)
