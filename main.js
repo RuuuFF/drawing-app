@@ -61,23 +61,20 @@ function updateSizeOnScreen() {
 
 increaseBtn.addEventListener('click', () => {
   size += 5
-  if (size > 50) {
-    size = 50
-  }
+  size > 50 ? size = 50 : size
   updateSizeOnScreen()
 })
 
 decreaseBtn.addEventListener('click', () => {
   size -= 5
-  if (size < 5) {
-    size = 5
-  }
+  size < 5 ? size = 5 : size
   updateSizeOnScreen()
 })
 
 colorEl.addEventListener('change', (e) => color = e.target.value)
 
 clearEl.addEventListener('click', () => ctx.clearRect(0, 0, canvas.width, canvas.height))
+
 
 // ===== MOBILE =====
 canvas.addEventListener('touchstart', (event) => {
@@ -99,21 +96,17 @@ canvas.addEventListener('touchmove', (event) => {
 })
 
 function setCanvasWidth() {
-  const screenWidth = document.body.clientWidth
+  let screenWidth = document.body.clientWidth
+  
   let canvasWidth = 90 * screenWidth / 100
   
-  if (canvasWidth > 800) {
-    canvasWidth = 800
-  }
+  canvasWidth > 800 ? canvasWidth = 800 : canvasWidth
   
-  if (screenWidth < 580) {
-    size = 5
-    updateSizeOnScreen()
-  }
+  screenWidth < 580 ? size = 5 : size
+  updateSizeOnScreen()
   
   canvas.width = canvasWidth
   canvas.height = canvasWidth
 }
 
 window.addEventListener('load', setCanvasWidth)
-window.addEventListener('resize', setCanvasWidth)
