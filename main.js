@@ -1,3 +1,4 @@
+const toolBox = document.querySelector('.toolbox')
 const increaseBtn = document.getElementById('increase')
 const decreaseBtn = document.getElementById('decrease')
 const sizeEl = document.getElementById('size')
@@ -12,7 +13,7 @@ const ctx = canvas.getContext('2d')
 
 
 // Define o tamanho padrão como 10
-let size = 1
+let size = 10
 // Cor padrão como "black"
 let color = 'black'
 // Declarando "x" e "y"
@@ -72,20 +73,34 @@ canvas.addEventListener('mousemove', (event) => {
 
 // Função "drawCircle"
 function drawCircle(x, y) {
+  // Inicia um caminho ou redefine o caminho atual (path = caminho)
   ctx.beginPath()
+  
+  // Cria um arco / curva (usado para criar círculos ou partes de círculos)
+  // x e y = coordenadas
+  // size = raio
+  // 0 e Math.PI * 2 = angulo inicial e angulo final
   ctx.arc(x, y, size, 0, Math.PI * 2)
+  // Define (também retorna) a cor para preencher o desenho (aceita gradientes ?)
   ctx.fillStyle = color
+  // Preenche o desenho atual (path)
   ctx.fill()
 }
 
 
 // Função "drawLine"
 function drawLine(x1, y1, x2, y2) {
+  // Inicia um caminho ou redefine o caminho atual (path = caminho)
   ctx.beginPath()
+  // Move o caminho (path) para o ponto especificado na tela, sem criar uma linha
   ctx.moveTo(x1, y1)
+  // Adiciona um novo ponto e cria uma linha para esse ponto a partir do último ponto especificado na tela (moveTo)
   ctx.lineTo(x2, y2)
+  // Define (ou retorna) a cor usada para traços (aceita gradientes ?)
   ctx.strokeStyle = color
+  // Define (ou retorna) a largura da linha
   ctx.lineWidth = size * 2
+  // Desenha o caminho que você definido em "moveTo" e "lineTo"
   ctx.stroke()
 }
 
@@ -160,17 +175,31 @@ canvas.addEventListener('touchmove', (event) => {
 
 function setCanvasWidth() {
   let screenWidth = document.body.clientWidth
+  let screenHeight = document.body.clientHeight
   
-  let canvasWidth = 90 * screenWidth / 100
+  // Pegando a largura (95%) e altura (90%) do canvas baseado em "screenWidth" e "screenHeight"
+  let canvasWidth = 95 * screenWidth / 100
+  let canvasHeight = 90 * screenHeight / 100
   
+  // Limite de 800 para a largura e altura do canvas
   canvasWidth > 800 ? canvasWidth = 800 : canvasWidth
+  canvasHeight > 800 ? canvasHeight = 800 : canvasHeight
   
+  // Se "screenWidth" for menor que 580, "size" = 5, senão não faz nada
   screenWidth < 580 ? size = 5 : size
+  // Chama a função
   updateSizeOnScreen()
   
+  // Pega a altura do elemento com a classe ".toolbox"
+  // "split" transforma a string em substring e retorna um novo array. 'px' é onde queremos separar a string
+  // "filter" deixa passar os arrays diferentes de vazios (com conteúdo)
+  let toolBoxHeight = +getComputedStyle(toolBox).height.split('px').filter(array => array !== '')
+  
+  // Largura de "toolBox" como a largura de "canvasWidth" + 4px (+4 pelas bordas do canvas (2+2 (de cada lado) = 4))
+  toolBox.style.width = `${canvasWidth + 4}px`
+  // "canvas" não precisa ser especificado com "px", somente números
   canvas.width = canvasWidth
-  canvas.height = canvasWidth
+  canvas.height = canvasHeight - toolBoxHeight
 }
-
 
 window.addEventListener('load', setCanvasWidth)
