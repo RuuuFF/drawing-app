@@ -174,19 +174,27 @@ canvas.addEventListener('touchmove', (event) => {
 
 
 function setCanvasWidth() {
-  let screenWidth = document.body.clientWidth
-  let screenHeight = document.body.clientHeight
+  const screenWidth = document.body.clientWidth
+  const screenHeight = document.body.clientHeight
+  
+  let sizeVw = 95
+  let sizeVh = 95
+  
+  // Se "screenHeight" for menor que "screenWidth", "sizeVw" tem seu valor abaixado para 90, se for maior "sizeVh" é alterafo para 90
+  // Entre a largura e a altura, quem tiver o maior valor, sua % é diminuída para 90
+  screenHeight < screenWidth ? sizeVw = 90 : sizeVh = 90
   
   // Pegando a largura (95%) e altura (90%) do canvas baseado em "screenWidth" e "screenHeight"
-  let canvasWidth = 95 * screenWidth / 100
-  let canvasHeight = 90 * screenHeight / 100
+  let canvasWidth = sizeVw * screenWidth / 100
+  let canvasHeight = sizeVh * screenHeight / 100
+  
   
   // Limite de 800 para a largura e altura do canvas
   canvasWidth > 800 ? canvasWidth = 800 : canvasWidth
   canvasHeight > 800 ? canvasHeight = 800 : canvasHeight
   
   // Se "screenWidth" for menor que 580, "size" = 5, senão não faz nada
-  screenWidth < 580 ? size = 5 : size
+  screenWidth < 800 ? size = 5 : size
   // Chama a função
   updateSizeOnScreen()
   

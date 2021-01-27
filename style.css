@@ -49,7 +49,7 @@ canvas {
   margin-right: 0;
 }
 
-@media (max-width: 580px) {
+@media (max-width: 800px) {
   html {
     font-size: 81.25%; /* 13px */
   }
